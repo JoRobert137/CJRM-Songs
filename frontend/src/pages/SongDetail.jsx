@@ -5,9 +5,11 @@ import axios from 'axios';
 export default function SongDetail() {
   const { id } = useParams();
   const [song, setSong] = useState(null);
+  
+  const BASE_URL = 'https://cjrm-songs.onrender.com';
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/songs/${id}`).then(res => setSong(res.data));
+    axios.get(`${BASE_URL}/songs/${id}`).then(res => setSong(res.data));
   }, [id]);
 
   if (!song) return (
