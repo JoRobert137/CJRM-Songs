@@ -6,8 +6,10 @@ export default function Home() {
   const [songs, setSongs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
+  const BASE_URL = 'https://cjrm-songs.onrender.com';
+
   useEffect(() => {
-    axios.get('http://localhost:5000/songs').then(res => setSongs(res.data));
+    axios.get(`${BASE_URL}/songs`).then(res => setSongs(res.data));
   }, []);
 
   // Filter songs by title or number (case-insensitive)
