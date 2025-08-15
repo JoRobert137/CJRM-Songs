@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import Logo from "../assets/image.png";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +13,11 @@ export default function Navbar() {
         <div className="px-6">
           <div className="flex justify-between h-20 items-center">
             <div className="flex items-center space-x-3">
-              <img src="../src/assets/image.png" alt="CJRM Logo" className="h-11 w-11" />
+              <img src={Logo} 
+              alt="CJRM Logo" 
+              className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14"
+            />
+
               <h1 className="text-white font-extrabold text-3xl tracking-wide">
                 CJRM Ministries
               </h1>
@@ -27,8 +32,8 @@ export default function Navbar() {
               <Link to="/download" className="text-white hover:text-pink-200 transition font-medium">
                 Download
               </Link>
-              <Link to="/about" className="text-white hover:text-pink-200 transition font-medium">
-                About
+              <Link to="/upload-songs" className="text-white hover:text-pink-200 transition font-medium">
+                Upload
               </Link>
               <Link to="/contact" className="text-white hover:text-pink-200 transition font-medium">
                 Contact
