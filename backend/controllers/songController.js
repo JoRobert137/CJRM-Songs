@@ -1,3 +1,4 @@
+const fs = require("fs");
 const Song = require('../models/songModels.js');
 const cloudinary = require("../config/cloudinary");
 
@@ -35,36 +36,55 @@ const addSong = async (req, res) => {
 const uploadSong = async (req, res) => {
   try {
     const { title, number, category } = req.body;
-
-    if (!req.files || !req.files.song) {
-      return res.status(400).json({ message: "No file uploaded" });
-    }
-
     const file = req.files.song;
+    const songName = req.body.songName || title || "Unknown_Song";
 
-    // Upload to Cloudinary (resource_type: "video" for audio/mp3)
     const result = await cloudinary.uploader.upload(file.tempFilePath, {
-      upload_preset: "my_songs",
       resource_type: "video",
       folder: "cjrm-songs",
+      public_id: songName,
+      use_filename: true,
+      unique_filename: false,
     });
 
+    // Generate download link with song name
+    const downloadUrl = result.secure_url.replace(
+      "/upload/",
+      `/upload/fl_attachment:${encodeURIComponent(songName)}/`
+    );
+
+    fs.unlinkSync(file.tempFilePath);
+
+        // Create a new song document with audio info
     const newSong = new Song({
       title,
       number,
       category,
-      url: result.secure_url,
+      url: result.secure_url, // Cloudinary URL
+      hasAudio: true
     });
 
     await newSong.save();
 
-    res.json({ message: "Song uploaded to Cloudinary!", song: newSong });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: err.message });
+    res.json({
+      message: "Song uploaded successfully",
+      songName,
+      song: newSong
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error uploading song" });
   }
 };
 
+const downloadSongs = async (req, res) => {
+  try {
+    const songs = await Song.find({ hasAudio: true }); // Only songs with uploaded audio
+    res.json(songs);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching songs" });
+  }
+};
 
 module.exports = {
   getSongs,
@@ -72,5 +92,6 @@ module.exports = {
   getSongByNumber,
   searchSongs,
   addSong,
-  uploadSong
+  uploadSong,
+  downloadSongs
 };

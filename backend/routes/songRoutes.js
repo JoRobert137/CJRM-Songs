@@ -1,5 +1,4 @@
 const express = require('express');
-const multer = require("multer");
 const path = require("path");
 const {
   getSongs,
@@ -7,13 +6,17 @@ const {
   getSongByNumber,
   searchSongs,
   addSong,
-  uploadSong
+  uploadSong,
+  downloadSongs
 } = require('../controllers/songController');
 
 const router = express.Router();
 
 // POST upload song
 router.post("/upload", uploadSong);
+
+// GET to fetch all songs for Download
+router.get('/download-songs', downloadSongs);
 
 router.get('/songs', getSongs);
 router.get('/songs/:id', getSongById);
