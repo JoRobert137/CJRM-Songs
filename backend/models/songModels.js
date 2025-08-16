@@ -6,8 +6,8 @@ const songSchema = new mongoose.Schema({
   category: String,            // optional: could be praise, worship, etc.
   url: String,                 // Cloudinary audio URL
   downloadUrl: String,         // Optional download URL
-  lyrics_tamil: String,
-  lyrics_english: String,
+  lyrics_tamil:  { type: String, required: true },
+  lyrics_english:  { type: String, required: true },
   hasAudio: { type: Boolean, default: false } // true if audio exists
 }, { timestamps: true });
 

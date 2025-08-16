@@ -7,34 +7,47 @@ export default function DownloadSongs() {
   const BASE_URL = "https://cjrm-songs.onrender.com";
 
   useEffect(() => {
-    fetch(`${BASE_URL}/download-songs`) // your backend route that returns only songs with audio
-      .then(res => res.json())
-      .then(data => {
+    fetch(`${BASE_URL}/download-songs`) // backend should return only songs with audio
+      .then((res) => res.json())
+      .then((data) => {
         setSongs(data);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
         setLoading(false);
       });
   }, []);
 
   const downloadFile = (url, title) => {
+    // Generate Cloudinary forced download link with filename
+    const safeTitle = title.replace(/\s+/g, "_"); // replace spaces
+    const forceDownloadUrl = url.replace(
+      "/upload/",
+      `/upload/fl_attachment:${safeTitle}/`
+    );
+
     const link = document.createElement("a");
-    link.href = url;
-    link.download = title; // downloaded file gets the song title
+    link.href = forceDownloadUrl;
+    link.setAttribute("download", `${safeTitle}.mp3`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   const downloadAll = () => {
-    songs.forEach(song => downloadFile(song.url, song.title));
+    songs.forEach((song) => downloadFile(song.url, song.title));
   };
 
-  if (loading) return <p className="text-center mt-20 text-lg">Loading songs...</p>;
+  if (loading)
+    return <p className="text-center mt-20 text-lg">Loading songs...</p>;
 
-  if (!songs.length) return <p className="text-center mt-20 text-lg">No downloadable songs available.</p>;
+  if (!songs.length)
+    return (
+      <p className="text-center mt-20 text-lg">
+        No downloadable songs available.
+      </p>
+    );
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -50,7 +63,7 @@ export default function DownloadSongs() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {songs.map(song => (
+        {songs.map((song) => (
           <div
             key={song._id}
             className="bg-white p-4 rounded shadow flex justify-between items-center"

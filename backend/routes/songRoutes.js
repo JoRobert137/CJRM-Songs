@@ -7,7 +7,8 @@ const {
   searchSongs,
   addSong,
   uploadSong,
-  downloadSongs
+  downloadSongs,
+  updateLyrics
 } = require('../controllers/songController');
 
 const router = express.Router();
@@ -23,5 +24,6 @@ router.get('/songs/:id', getSongById);
 router.get('/songs/number/:num', getSongByNumber);
 router.get('/search', searchSongs);
 router.post('/add-songs', addSong);
+router.patch('/add-lyrics', updateLyrics);
 
 module.exports = router;

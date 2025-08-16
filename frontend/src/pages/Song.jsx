@@ -14,13 +14,16 @@ export default function SongsPage() {
   }, []);
 
   // Filter songs by title or number (case-insensitive)
-  const filteredSongs = songs.filter((song) => {
+  const filteredSongs = songs
+  .filter((song) => {
     const term = searchTerm.toLowerCase();
     return (
       song.title.toLowerCase().includes(term) ||
       song.number.toString().includes(term)
     );
-  });
+  })
+  .sort((a, b) => a.number - b.number); 
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-pink-50 to-blue-100 p-6 flex flex-col items-center">

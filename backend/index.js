@@ -17,6 +17,12 @@ app.use(fileUpload({
   tempFileDir: '/tmp/'
 }))
 
+// Optional: set timeout for all requests
+app.use((req, res, next) => {
+  req.setTimeout(5 * 60 * 1000); // 5 minutes
+  next();
+});
+
 app.use('/', songRoutes);
 
 mongoose
