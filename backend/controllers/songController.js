@@ -35,7 +35,7 @@ const addSong = async (req, res) => {
 // Upload a song
 const uploadSong = async (req, res) => {
   try {
-    const { title, number, category } = req.body;
+    const { title, number, category, lyrics_tamil, lyrics_english } = req.body;
     const file = req.files.song;
     const songName = req.body.songName || title || "Unknown_Song";
 
@@ -55,12 +55,14 @@ const uploadSong = async (req, res) => {
 
     fs.unlinkSync(file.tempFilePath);
 
-        // Create a new song document with audio info
+    // Create a new song document with audio info
     const newSong = new Song({
       title,
       number,
       category,
-      url: result.secure_url, // Cloudinary URL
+      lyrics_tamil,
+      lyrics_english,
+      url: result.secure_url,
       hasAudio: true
     });
 
@@ -86,6 +88,27 @@ const downloadSongs = async (req, res) => {
   }
 };
 
+const updateLyrics = async (req, res) => {
+  try {
+    const { songId } = req.params;
+    const { lyrics_tamil, lyrics_english } = req.body;
+
+    const song = await Song.findById(songId);
+
+    if (!song) return res.status(404).json({ message: "Song not found" });
+
+    song.lyrics_tamil = lyrics_tamil || song.lyrics_tamil;
+    song.lyrics_english = lyrics_english || song.lyrics_english;
+
+    await song.save();
+
+    res.json({ message: "Lyrics updated successfully", song });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error updating lyrics" });
+  }
+};
+
 module.exports = {
   getSongs,
   getSongById,
@@ -93,5 +116,6 @@ module.exports = {
   searchSongs,
   addSong,
   uploadSong,
-  downloadSongs
+  downloadSongs,
+  updateLyrics
 };

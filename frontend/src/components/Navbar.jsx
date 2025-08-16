@@ -13,29 +13,40 @@ export default function Navbar() {
         <div className="px-6">
           <div className="flex justify-between h-20 items-center">
             <div className="flex items-center space-x-3">
-              <img src={Logo} 
-              alt="CJRM Logo" 
-              className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14"
-            />
-
+              <img
+                src={Logo}
+                alt="CJRM Logo"
+                className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14"
+              />
               <h1 className="text-white font-extrabold text-3xl tracking-wide">
                 CJRM Ministries
               </h1>
             </div>
 
-
             {/* Desktop Menu */}
             <div className="hidden md:flex space-x-12 text-lg">
-              <Link to="/songs" className="text-white hover:text-pink-200 transition font-medium">
+              <Link
+                to="/songs"
+                className="text-white hover:text-pink-200 transition font-medium"
+              >
                 Songs
               </Link>
-              <Link to="/download" className="text-white hover:text-pink-200 transition font-medium">
-                Download
+              <Link
+                to="/download"
+                className="text-white hover:text-pink-200 transition font-medium"
+              >
+                Download Songs
               </Link>
-              <Link to="/upload-songs" className="text-white hover:text-pink-200 transition font-medium">
+              <Link
+                to="/upload-songs"
+                className="text-white hover:text-pink-200 transition font-medium"
+              >
                 Upload
               </Link>
-              <Link to="/contact" className="text-white hover:text-pink-200 transition font-medium">
+              <Link
+                to="/contact"
+                className="text-white hover:text-pink-200 transition font-medium"
+              >
                 Contact
               </Link>
             </div>
@@ -55,19 +66,32 @@ export default function Navbar() {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden bg-gradient-to-b from-blue-500 to-pink-500 px-4 py-4 space-y-4 text-lg">
-            <Link to="/" className="block text-white hover:text-pink-200 font-medium" onClick={() => setIsOpen(false)}>
-              Home
-            </Link>
-            <Link to="/songs" className="block text-white hover:text-pink-200 font-medium" onClick={() => setIsOpen(false)}>
+            <Link
+              to="/songs"
+              className="block text-white hover:text-pink-200 font-medium"
+              onClick={() => setIsOpen(false)}
+            >
               Songs
             </Link>
-            <Link to="/setlists" className="block text-white hover:text-pink-200 font-medium" onClick={() => setIsOpen(false)}>
-              Setlists
+            <Link
+              to="/download"
+              className="block text-white hover:text-pink-200 font-medium"
+              onClick={() => setIsOpen(false)}
+            >
+              Download Songs
             </Link>
-            <Link to="/about" className="block text-white hover:text-pink-200 font-medium" onClick={() => setIsOpen(false)}>
-              About
+            <Link
+              to="/upload-songs"
+              className="block text-white hover:text-pink-200 font-medium"
+              onClick={() => setIsOpen(false)}
+            >
+              Upload
             </Link>
-            <Link to="/contact" className="block text-white hover:text-pink-200 font-medium" onClick={() => setIsOpen(false)}>
+            <Link
+              to="/contact"
+              className="block text-white hover:text-pink-200 font-medium"
+              onClick={() => setIsOpen(false)}
+            >
               Contact
             </Link>
           </div>
