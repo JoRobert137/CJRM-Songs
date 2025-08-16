@@ -11,7 +11,7 @@ export default function SongUpload() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const BASE_URL = "http://localhost:5000";
+  const BASE_URL = "hhttps://cjrm-songs.onrender.com";
 
   // Function to automatically add \n after sentence-ending punctuation
   const formatLyricsAutoNewline = (lyrics) => {
